@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>&lt;google-youtube&gt; Demo</title>
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel='import' href='//webduino.io/components/webduino/web-arduino.html'></link>
+    <link rel='import' href='//webduino.io/components/webduino/wa-button.html'></link>
+    <link rel="import" href="google-youtube.html">
+    <style>
+    body {
+        font-family: sans-serif;
+        background: rgba(204, 204, 204, 0.31);
+    }
+    div {
+        margin-bottom: 1em;
+    }
+    </style>
+</head>
+
+<body unresolved>
+    <web-arduino id='board' device='MNWO'>
+        <wa-button id='btn' pin='10'></wa-button>
+    </web-arduino>
+
+    <google-youtube id="googleYouTube" videoid="jpJzjOeQOvc">
+    </google-youtube>
+
+    <script>
+    var stop = true;
+    window.addEventListener('WebComponentsReady', function() {
+        var board = document.getElementById('board');
+        board.on('ready', function() {
+            var btn = document.getElementById('btn');
+            btn.on('pressed', function() {
+                if (stop == true) {
+                    googleYouTube.play();
+                    stop = false;
+                } else {
+                    googleYouTube.seekTo(0);
+                }
+            }, false);
+        });
+    });
+    </script>
+</body>
+
+</html>
