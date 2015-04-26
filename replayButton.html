@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>&lt;google-youtube&gt; Demo</title>
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
-    <link rel='import' href='//webduino.io/components/webduino/web-arduino.html'></link>
-    <link rel='import' href='//webduino.io/components/webduino/wa-button.html'></link>
+    <link rel='import' href='http://webduino.io/components/webduino/web-arduino.html'></link>
+    <link rel='import' href='http://webduino.io/components/webduino/wa-button.html'></link>
     <link rel="import" href="google-youtube.html">
     <style>
     body {
         font-family: sans-serif;
-        background: rgba(204, 204, 204, 0.31);
+        background: rgba(104, 104, 104, 0.31);
     }
     div {
         margin-bottom: 1em;
@@ -21,25 +21,30 @@
 </head>
 
 <body unresolved>
-    <web-arduino id='board' device='MNWO'>
+    <h1>結合Webduino，按『 按鈕 』，再來一次!</h1>
+    <h2>Webudino開發版可直接使用Web技術控制Arduino傳感器，</h2>
+    <h2>這例子展示了按按鈕就可以播放、重撥Youtube影片</h2>
+
+    <web-arduino id='board' device='rb5e'>
         <wa-button id='btn' pin='10'></wa-button>
     </web-arduino>
 
-    <google-youtube id="googleYouTube" videoid="jpJzjOeQOvc">
+    <google-youtube id="googleYouTube" videoid="p0SAvIdM-wA">
     </google-youtube>
 
     <script>
-    var stop = true;
+    var play = false;
     window.addEventListener('WebComponentsReady', function() {
         var board = document.getElementById('board');
         board.on('ready', function() {
             var btn = document.getElementById('btn');
             btn.on('pressed', function() {
-                if (stop == true) {
+                if (!play) {
+                    googleYouTube.seekTo(14);
                     googleYouTube.play();
-                    stop = false;
+                    play = true;
                 } else {
-                    googleYouTube.seekTo(0);
+                    googleYouTube.seekTo(14);
                 }
             }, false);
         });
